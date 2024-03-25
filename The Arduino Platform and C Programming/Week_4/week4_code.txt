@@ -1,0 +1,44 @@
+#include <stdio.h>;
+
+// Define LED pin
+const int LED_PIN = 13;
+
+void setup() {
+  // Initialize LED pin as output
+  pinMode(LED_PIN, OUTPUT);
+
+  // Set state to low first (off) as required by the task 
+  digitalWrite(LED_PIN, LOW);
+  
+  // Initialize serial communication
+  Serial.begin(9600); // set the baud rate to 9600
+  // instruction
+  Serial.println("Enter 1 to switch on the LED or Enter 0 to switch off the LED"); 
+}
+
+// loop for so that it continue as long as arduino has power
+void loop() {
+    
+  // if serial is on, get the input data
+  if (Serial.available() > 0) {
+    // define data to the read input 
+    char data = Serial.read(); 
+    
+    // if data=='1', turn on the LED, set the pin to high (on)
+    if (data == '1') {
+      digitalWrite(LED_PIN, HIGH);      // Turn on LED
+      Serial.println("LED turned on");  // print output in serial print
+    }
+
+    // if data=='0', turn on the LED, set the pin to low (off)
+    else if (data == '0') {
+      digitalWrite(LED_PIN, LOW);        // Turn off LED
+      Serial.println("LED turned off");  // print output in serial print
+    }
+    else{
+      // give warning is user enter the wrong output 
+      // uses output beside '1' or '0'
+      Serial.println("Wrong data is given. Please insert the correct input"); 
+    }
+  }
+}
